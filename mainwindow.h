@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QLatin1Char>
 #include <QObject>
+#include "StopWatch_head.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,27 +19,19 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void reInst();
     ~MainWindow();
 
 private slots:
     void on_Button_stop_start_toggled(bool checked);
 
+    void on_Button_Circle_clicked();
+
+    void on_Button_Clear_clicked();
+
 private:
     Ui::MainWindow *ui;
-};
-
-class StopWatch : public QObject{
-    Q_OBJECT
-public:
-    StopWatch();
-    void start(QLabel *timeLabel);
-    void stop();
-public slots:
-    void update();
-private:
-    QTime el_time;
-    QTimer timer;
-    QLabel *timeLabel;
+    StopWatch *sw;
 };
 
 #endif // MAINWINDOW_H
