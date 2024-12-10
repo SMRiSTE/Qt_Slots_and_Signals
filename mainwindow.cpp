@@ -22,16 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-void MainWindow::reInst(){
-    if(sw->timer_check()){
-        qDebug() << "У вас уже запущен таймер, остановите его, а потом очистите";
-    }
-    else{
-        sw = nullptr;
-        sw = new StopWatch;
-    }
-}
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -52,15 +42,13 @@ void MainWindow::on_Button_stop_start_toggled(bool checked)
 
 void MainWindow::on_Button_Circle_clicked()
 {
-    QString str = ui->Time_label->text();
-    ui->textEdit->append(QString("%1) %2").arg(sw->num).arg(str));
-    sw->num++;
+    sw->circle(ui->textEdit);
 }
 
 
 void MainWindow::on_Button_Clear_clicked()
 {
-    reInst();
+    sw->reInst();
     ui->Time_label->setText(QString("Время"));
     ui->textEdit->clear();
 }
