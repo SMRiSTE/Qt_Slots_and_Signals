@@ -6,30 +6,17 @@ StopWatch::StopWatch(){
 
 void StopWatch::start(QLabel *timeLabel){
     this->timeLabel = timeLabel;
-    if(!this->bo_el_time && !this->bo_st_time){
-        el_time = QTime::currentTime();
-        for_circle = el_time;
-        bo_el_time = true;
-        this->el_time = el_time;
-    }
-    if(bo_st_time){
-        el_time = el_time.addMSecs(st_time.msecsTo(QTime::currentTime()));
-        for_circle = for_circle.addMSecs(st_time.msecsTo(QTime::currentTime()));
-    }
     timer.start(100);
 }
 
 void StopWatch::stop(){
     timer.stop();
-    st_time = QTime::currentTime();
-    bo_st_time = true;
 }
 
 void StopWatch::update(){
-    int elapsed = el_time.msecsTo(QTime::currentTime());
-    int seconds = elapsed / 1000;
-    int milliseconds = elapsed % 100;
-    timeLabel->setText(QString("%1.%2").arg(seconds).arg(milliseconds));
+    this->time+=0.10;
+    this->circle_time+=0.10;
+    timeLabel->setText(QString("%1").arg(time));
 }
 
 bool StopWatch::timer_check(){
@@ -43,21 +30,27 @@ bool StopWatch::timer_check(){
 
 void StopWatch::reInst(){
     if(timer_check()){
-        qDebug() << "У вас уже запущен таймер, остановите его, а потом очистите";
+        timer.stop();
+        time = 0;
+        circle_time = 0;
+        this->num = 1;
     }
     else{
-        bo_el_time = false;
-        bo_st_time = false;
+        time = 0;
+        circle_time = 0;
         this->num = 1;
     }
 }
 
 void StopWatch::circle(QTextEdit *textEdit){
     this->textEdit = textEdit;
-    int elapsed = for_circle.msecsTo(QTime::currentTime());
-    int seconds = elapsed / 1000;
-    int milliseconds = elapsed % 100;
-    textEdit->append(QString("%1) %2.%3").arg(this->num).arg(seconds).arg(milliseconds));
+
+    textEdit->append(QString("%1) %2").arg(this->num).arg(circle_time));
     this->num++;
-    for_circle = QTime::currentTime();
+    circle_time = 0.0;
+}
+
+StopWatch::~StopWatch(){
+    delete timeLabel;
+    delete textEdit;
 }

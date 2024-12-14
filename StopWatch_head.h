@@ -13,28 +13,23 @@ class StopWatch : public QObject{
     Q_OBJECT
 
 public:
-    int num = 1;
-
     StopWatch();
-    void start(QLabel *timeLabel);
+    ~StopWatch();
 
-    ~StopWatch(){
-        delete timeLabel;
-    }
+    void start(QLabel *timeLabel);
     void stop();
     bool timer_check();
     void reInst();
     void circle(QTextEdit *textEdit);
 
+    int num = 1;
+    double time;
+    double circle_time;
+
 public slots:
     void update();
 
 private:
-    bool bo_st_time = false;
-    bool bo_el_time = false;
-    QTime st_time;
-    QTime el_time;
-    QTime for_circle;
     QTimer timer;
     QLabel *timeLabel;
     QTextEdit *textEdit;

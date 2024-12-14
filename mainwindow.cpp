@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete sw;
 }
 
 void MainWindow::on_Button_stop_start_toggled(bool checked)
@@ -51,5 +52,8 @@ void MainWindow::on_Button_Clear_clicked()
     sw->reInst();
     ui->Time_label->setText(QString("Время"));
     ui->textEdit->clear();
+    if(ui->Button_stop_start->isChecked()){
+        ui->Button_stop_start->setChecked(false);
+    }
 }
 
